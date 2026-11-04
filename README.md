@@ -1,36 +1,41 @@
 # machine-Learning-1
-# Polynomial Regression with 5 Key Optimizers
+# Polynomial Regression with 5 Key Optimizers (Isolated Notebooks)
 
-This repository contains a beginner-friendly implementation of **Polynomial Regression** applied to a real-world dataset (**California Housing Prices**). The core objective of this project is to analyze, implement, and compare the performance of **5 different optimization algorithms (Optimizers)** in updating weights and minimizing the Mean Squared Error (MSE).
+This repository contains an academic implementation of **Polynomial Regression** applied to a real-world climate dataset (**Earth Surface Temperature Data by Berkeley Earth**). 
 
-## 📋 Project Requirements & Specifications
+The core objective of this project is to analyze, implement, and compare the performance of **5 different optimization algorithms (Optimizers)** in updating weights and minimizing the Mean Squared Error (MSE).
 
-As requested, the project has been structured into separate, isolated code blocks (cells) to independently evaluate each optimizer on a non-linear (Polynomial) dataset.
-
-### 1. Dataset & Preprocessing
-* **Dataset:** California Housing Prices (Real Dataset).
-* **Feature Transformation:** Applied `PolynomialFeatures(degree=2)` to capture the non-linear relationship between *Median Income* and *Median House Value*.
-* **Feature Scaling:** Utilized `StandardScaler` to normalize the data, ensuring stable and faster convergence for all gradient-based optimizers.
-
-### 2. Implemented Optimizers (5 Models)
-The project evaluates the following 5 optimization techniques:
-1. **GD / SGD (Stochastic Gradient Descent):** Updates weights based on single random samples with a constant learning rate.
-2. **Mini-Batch GD:** Updates weights using smaller subsets of data (implemented sequentially via mini-batches).
-3. **GD with Momentum:** Accelerates gradient descent by accumulating a velocity vector (`momentum=0.9`) to prevent getting stuck in local minima.
-4. **AdaGrad / Adaptive Learning Rate:** Dynamically adapts the learning rate parameter-by-parameter based on historical gradients.
-5. **Adam (Adaptive Moment Estimation):** Combines the advantages of both Momentum and RMSProp/AdaGrad for optimal performance.
+## 📊 Dataset & The Logic Behind the Full U-Shape Curve
+Instead of using dummy or generated data, this project utilizes **real-world temperature records for Chicago**. 
+* **The Cycle:** We extracted exactly **one full climatic cycle (12 months)** starting from July (Summer) through Winter and back to July.
+* **The Feature Transformation:** Applied `PolynomialFeatures(degree=2)` after centering the timeline around zero.
+* **The Result:** Because temperatures naturally drop in winter and rise in summer, the real dataset forces the model to capture a **perfect, continuous U-shaped quadratic curve** (Hot ➡️ Cold ➡️ Hot).
 
 ---
 
-## 📊 Evaluation & Results Summary
+## 📋 Repository Structure
+To ensure clean evaluation, the project is strictly divided into **5 separate Jupyter Notebooks (`.ipynb`)**, each dedicated to a single optimizer:
 
-After training each model independently, the **Mean Squared Error (MSE)** was calculated for comparison. 
-
-* *Note on Visualization:* The final plot beautifully illustrates a **clear quadratic polynomial curve** (representing the accelerating right arm of a parabolic $U$-shape), perfectly capturing how housing prices scale non-linearly with income.
+1. 📄 **`1_SGD_Optimizer.ipynb`**
+   * Implements standard Stochastic Gradient Descent with a constant learning rate.
+2. 📄 **`2_Mini_Batch_GD_Optimizer.ipynb`**
+   * Implements Mini-Batch Gradient Descent via sequential batch updating (`partial_fit`).
+3. 📄 **`3_Momentum_Optimizer.ipynb`**
+   * Accelerates convergence by adding a velocity vector (`momentum=0.9`) to stabilize gradient steps.
+4. 📄 **`4_AdaGrad_Optimizer.ipynb`**
+   * Dynamically dampens or accelerates learning rates based on historically accumulated gradients (`learning_rate='adaptive'`).
+5. 📄 **`5_Adam_Optimizer.ipynb`**
+   * Leverages Adaptive Moment Estimation, merging both Momentum and adaptive scaling benefits.
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Optimization & Engineering Highlights
+* **Gradient Explosion Prevention:** Scaled features using `StandardScaler` to bound polynomial outputs and secure smooth convergence.
+* **Architecture Mapping:** Implemented complex optimizers (Momentum/Adam) via an identity-activated single-layer framework to maintain authentic regression boundaries without neural network non-linearities.
+
+---
+
+## 💻 Tech Stack
 * **Language:** Python 3
-* **Environment:** Kaggle Notebook
-* **Libraries:** Pandas, NumPy, Matplotlib, Scikit-Learn
+* **Environment:** Kaggle Notebooks
+* **Libraries:** Scikit-Learn, Pandas, NumPy, Matplotlib
